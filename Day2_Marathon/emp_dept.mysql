@@ -110,8 +110,28 @@ mysql> select ename from emp join dept on emp.deptid=dept.deptid where deptname=
 | b9    |
 +-------+
 3. Display the name of all the dept and count of all the employees in that dept.
+mysql> Select deptname, count(*) from emp join dept where emp.deptid=dept.deptid  group by deptname;
++----------+----------+
+| deptname | count(*) |
++----------+----------+
+| HR       |       21 |
+| IT       |       10 |
+| Finance  |       14 |
++----------+----------+
 4. Display the name , deptname and  salary of the employee whose salary is highest.
+mysql> Select deptname, ename ,salary from emp join dept where emp.deptid=dept.deptid having salary>28000;
++----------+-------+--------+
+| deptname | ename | salary |
++----------+-------+--------+
+| HR       | x     |  28222 |
++----------+-------+--------+
 5. Display the name , deptname and  salary of the employee whose salary is lowest.
+mysql> Select deptname, ename ,salary from emp join dept where emp.deptid=dept.deptid having salary<4;
++----------+-------+--------+
+| deptname | ename | salary |
++----------+-------+--------+
+| IT       | a5    |      3 |
++----------+-------+--------+
 6. Display the name , deptname of employee whose salary is second highest.
 7. display the name, deptname of top five earning employees.
 8. Display the deptname, name of top 5 earning employees from each dept.
