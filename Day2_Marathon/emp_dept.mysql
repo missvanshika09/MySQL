@@ -1,0 +1,119 @@
+mysql> select *from emp;
++------+-------+--------+--------+
+| eid  | ename | salary | deptid |
++------+-------+--------+--------+
+|    1 | a     |   1000 |      1 |
+|    2 | b     |   1023 |      2 |
+|    3 | c     |     23 |      3 |
+|    4 | d     |    123 |      3 |
+|    5 | e     |    102 |      1 |
+|    6 | f     |   2023 |      3 |
+|    7 | g     |    323 |      1 |
+|    8 | h     |    523 |      2 |
+|    9 | i     |    136 |      1 |
+|   10 | j     |    627 |      1 |
+|   11 | k     |    978 |      3 |
+|   12 | l     |    222 |      1 |
+|   13 | m     |    746 |      1 |
+|   14 | n     |   3223 |      1 |
+|   15 | o     |   1999 |      3 |
+|   16 | p     |    821 |      3 |
+|   17 | q     |    324 |      1 |
+|   18 | r     |    546 |      3 |
+|   19 | s     |    717 |      2 |
+|   20 | t     |    817 |      2 |
+|   21 | u     |    888 |      3 |
+|   22 | v     |   9029 |      1 |
+|   23 | w     |  20001 |      3 |
+|   24 | x     |  28222 |      1 |
+|   25 | y     |  19212 |      3 |
+|   26 | z     |  12111 |      1 |
+|   27 | a1    |   3211 |      1 |
+|   28 | a2    |   9238 |      1 |
+|   29 | a3    |    653 |      3 |
+|   30 | a4    |     44 |      1 |
+|   31 | a5    |      3 |      2 |
+|   32 | a6    |     16 |      1 |
+|   33 | a7    |     14 |      2 |
+|   34 | a8    |    845 |      1 |
+|   35 | a9    |    135 |      3 |
+|   36 | b1    |   1212 |      1 |
+|   37 | b2    |   1242 |      2 |
+|   38 | b3    |   4212 |      2 |
+|   39 | b4    |   4444 |      3 |
+|   40 | b5    |    555 |      1 |
+|   41 | b6    |   1553 |      3 |
+|   42 | b7    |   6432 |      1 |
+|   43 | b8    |   4532 |      2 |
+|   44 | b9    |   3355 |      1 |
+|   45 | c1    |   2324 |      2 |
++------+-------+--------+--------+
+45 rows in set (0.44 sec)
+
+mysql> select * from dept;
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | HR       |
+|      2 | IT       |
+|      3 | Finance  |
+|      4 | OPR      |
++--------+----------+
+4 rows in set (0.11 sec)
+1. Display the name of all employees whose salary is between 500 and 1300
+mysql> select ename from emp where salary between 500 and 1300;
++-------+
+| ename |
++-------+
+| a     |
+| b     |
+| h     |
+| j     |
+| k     |
+| m     |
+| p     |
+| r     |
+| s     |
+| t     |
+| u     |
+| a3    |
+| a8    |
+| b1    |
+| b2    |
+| b5    |
++-------+
+2. Display the name of all employees who are in HR dept
+mysql> select ename from emp join dept on emp.deptid=dept.deptid where deptname='HR';
++-------+
+| ename |
++-------+
+| a     |
+| e     |
+| g     |
+| i     |
+| j     |
+| l     |
+| m     |
+| n     |
+| q     |
+| v     |
+| x     |
+| z     |
+| a1    |
+| a2    |
+| a4    |
+| a6    |
+| a8    |
+| b1    |
+| b5    |
+| b7    |
+| b9    |
++-------+
+3. Display the name of all the dept and count of all the employees in that dept.
+4. Display the name , deptname and  salary of the employee whose salary is highest.
+5. Display the name , deptname and  salary of the employee whose salary is lowest.
+6. Display the name , deptname of employee whose salary is second highest.
+7. display the name, deptname of top five earning employees.
+8. Display the deptname, name of top 5 earning employees from each dept.
+9. Display the avg salary of each dept.
+10.Display the min and max salary of each dept.
