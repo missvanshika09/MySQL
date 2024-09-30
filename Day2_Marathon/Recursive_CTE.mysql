@@ -1,0 +1,68 @@
+Question: "Create a table to represent parts and their hierarchical relationships. Each part may have a parent part.
+Write a recursive query to find the topmost parent part for each part in the hierarchy."
+# is used to add comment in sql Recursive CTEs common table expressions
+create table parts (partid varchar(10), parentpartid varchar(10));
+
+mysql> desc parts;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| partid       | varchar(10) | YES  |     | NULL    |       |
+| parentpartid | varchar(10) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+insert into parts values('A','A');
+insert into parts values('B','A');
+insert into parts values('C','B');
+insert into parts values('D','C');
+insert into parts values('E','E');
+insert into parts values('F','E');
+insert into parts values('G','F');
+insert into parts values('H','G');
+insert into parts values('I','H');
+insert into parts values('J','A');
+insert into parts values('K','J');
+insert into parts values('L','K');
+insert into parts values('M','L');
+mysql> select * from parts;
++--------+--------------+
+| partid | parentpartid |
++--------+--------------+
+| A      | A            |
+| B      | A            |
+| C      | B            |
+| D      | C            |
+| E      | E            |
+| F      | E            |
+| G      | F            |
+| H      | G            |
+| I      | H            |
+| J      | A            |
+| K      | J            |
+| L      | K            |
+| M      | L            |
+| A      | A            |
+| B      | A            |
+| C      | B            |
+| D      | C            |
+| E      | E            |
+| F      | E            |
+| G      | F            |
+| H      | G            |
+| I      | H            |
+| J      | A            |
+| K      | J            |
+| L      | K            |
+| M      | L            |
++--------+--------------+
+
+
+with recursive tab
+as
+(select partid originalpartid,  parentpartid immediateparent , parentpartidtopmostparent,0 level
+ from parts
+union all 
+select originalpartid,  p.parentpartid ,immediateparent ,level+1
+ from tab t, parts p,
+where t.topmostparent=p.partid
+and p.partid<>p.parentpartid )
+select originalpartid partid, topmostparent from(select *,row_number() over(partition by originalpartid order by level desc) rn from tab) as t where rn=1;
