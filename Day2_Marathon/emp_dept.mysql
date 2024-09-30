@@ -152,7 +152,44 @@ mysql> select ename, deptname, salary from emp join dept on dept.deptid=emp.dept
 | z     | HR       |  12111 |
 +-------+----------+--------+
 8. Display the deptname, name of top 5 earning employees from each dept.
+mysql>select * from (select deptname,ename,salary,row_number() over)partition by deptname order by salary desc)rn from emp join dept on emp.deptid=dept.deptid) as t where rn<=5;
++----------+-------+--------+----+
+| deptname | ename | salary | rn |
++----------+-------+--------+----+
+| Finance  | w     |  20001 |  1 |
+| Finance  | y     |  19212 |  2 |
+| Finance  | b4    |   4444 |  3 |
+| Finance  | f     |   2023 |  4 |
+| Finance  | o     |   1999 |  5 |
+| HR       | a101  |  97566 |  1 |
+| HR       | x     |  28222 |  2 |
+| HR       | z     |  12111 |  3 |
+| HR       | a2    |   9238 |  4 |
+| HR       | v     |   9029 |  5 |
+| IT       | b8    |   4532 |  1 |
+| IT       | b3    |   4212 |  2 |
+| IT       | c1    |   2324 |  3 |
+| IT       | b2    |   1242 |  4 |
+| IT       | b     |   1023 |  5 |
++----------+-------+--------+----+
 
 
 9. Display the avg salary of each dept.
+mysql> select avg(salary) from emp join dept on dept.deptid=emp.deptid group by deptname;
++-------------+
+| avg(salary) |
++-------------+
+|   8115.4091 |
+|   1540.7000 |
+|   3566.6000 |
++-------------+
 10.Display the min and max salary of each dept.
+
+mysql> select max(salary), min(salary) from emp join dept on dept.deptid=emp.deptid group by deptname;
++-------------+-------------+
+| max(salary) | min(salary) |
++-------------+-------------+
+|       97566 |          16 |
+|        4532 |           3 |
+|       20001 |          23 |
++-------------+-------------+
