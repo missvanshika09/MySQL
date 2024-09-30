@@ -266,13 +266,46 @@ mysql> select sname,comm*100 from salespeople;
 | Rifkin  |    15.00 |
 +---------+----------+
 
-23. Find the largest order taken by each salesperson on each date, eliminating those MAX orders
-which are less than $3000.00 in value.
+23. Find the largest order taken by each salesperson on each date, eliminating those MAX orders which are less than $3000.00 in value.
+ mysql> select odate,sname,max(amt) from salespeople s join orders o on s.snum=o.snum  group by odate,sname having max(amt)>3000;
++------------+--------+----------+
+| odate      | sname  | max(amt) |
++------------+--------+----------+
+| 1996-10-03 | Serres |  5160.45 |
+| 1996-10-05 | Peel   |  4723.00 |
+| 1996-10-06 | Peel   |  9891.88 |
++------------+--------+----------+
+
 24. List the largest orders for October 3, for each salesperson.
+mysql> select sname,max(amt) from orders o  join salespeople s on o.snum=s.snum  where odate= '1996-10-03' group by sname  ;
++--------+----------+
+| sname  | max(amt) |
++--------+----------+
+| Rifkin |  1098.16 |
+| Motika |  1900.10 |
+| Peel   |   767.19 |
+| Serres |  5160.45 |
++--------+----------+
+
 25. Find all customers located in cities where Serres (SNUM 1002) has customers.
+mysql> select cname from  customers where snum=1002;
++-------+
+| cname |
++-------+
+| Liu   |
+| Grass |
++-------+
 26. Select all customers with a rating above 200.00.
+mysql> select * from  customers where rating>200.00;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
 
 27. Count the number of salespeople currently listing orders in the Orders table.
+
 28. Write a query that produces all customers serviced by salespeople with a commission above
 12%. Output the customer’s name and the salesperson’s rate of commission.
 29. Find salespeople who have multiple customers.
