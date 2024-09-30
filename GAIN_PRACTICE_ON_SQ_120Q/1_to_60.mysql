@@ -1,0 +1,251 @@
+mysql> use marathonsql;
+Database changed
+mysql> CREATE TABLE Salespeople ( SNUM INT PRIMARY KEY, SNAME VARCHAR(50),CITY VARCHAR(50),  COMM DECIMAL(3, 2));
+
+mysql> desc salespeople;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| SNUM  | int          | NO   | PRI | NULL    |       |
+| SNAME | varchar(50)  | YES  |     | NULL    |       |
+| CITY  | varchar(50)  | YES  |     | NULL    |       |
+| COMM  | decimal(3,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+mysql> INSERT INTO Salespeople (SNUM, SNAME, CITY, COMM) VALUES (1001, 'Peel', 'London', 0.12), (1002, 'Serres', 'San Jose', 0.13),(1004, 'Motika', 'London', 0.11), (1007, 'Rifkin', 'Barcelona', 0.15),(1003, 'AxelRod', 'New York', 0.10),(1005, 'Fran', 'London', 0.26);
+mysql> select * from salespeople;
++------+---------+-----------+------+
+| SNUM | SNAME   | CITY      | COMM |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1003 | AxelRod | New York  | 0.10 |
+| 1004 | Motika  | London    | 0.11 |
+| 1005 | Fran    | London    | 0.26 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
++------+---------+-----------+------+
+6 rows in set (0.00 sec)
+mysql> CREATE TABLE Customers (CNUM INT PRIMARY KEY, CNAME VARCHAR(50), CITY VARCHAR(50), RATING INT, SNUM INT,   FOREIGN KEY (SNUM) REFERENCES Salespeople(SNUM) );
+
+mysql> desc customers;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| CNUM   | int         | NO   | PRI | NULL    |       |
+| CNAME  | varchar(50) | YES  |     | NULL    |       |
+| CITY   | varchar(50) | YES  |     | NULL    |       |
+| RATING | int         | YES  |     | NULL    |       |
+| SNUM   | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+mysql> INSERT INTO Customers (CNUM, CNAME, CITY, RATING, SNUM) VALUES (2001, 'Hoffman', 'London', 100, 1001),(2002, 'Giovanni', 'Rome', 200, 1003), (2003, 'Liu', 'San Jose', 200, 1002),(2004, 'Grass', 'Berlin', 300, 1002),(2006, 'Clemens', 'London', 100, 1001), (2008, 'Cisneros', 'San Jose', 300, 1007),(2007, 'Pereira', 'Rome', 100, 1004);
+
+mysql> select * from customers;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+mysql> CREATE TABLE Orders ( ONUM INT PRIMARY KEY, AMT DECIMAL(10, 2),  ODATE DATE, CNUM INT, SNUM INT, FOREIGN KEY (CNUM) REFERENCES Customers(CNUM), FOREIGN KEY (SNUM) REFERENCES Salespeople(SNUM) );
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> desc orders;
++-------+---------------+------+-----+---------+-------+
+| Field | Type          | Null | Key | Default | Extra |
++-------+---------------+------+-----+---------+-------+
+| ONUM  | int           | NO   | PRI | NULL    |       |
+| AMT   | decimal(10,2) | YES  |     | NULL    |       |
+| ODATE | date          | YES  |     | NULL    |       |
+| CNUM  | int           | YES  | MUL | NULL    |       |
+| SNUM  | int           | YES  | MUL | NULL    |       |
++-------+---------------+------+-----+---------+-------+
+mysql>  INSERT INTO Orders (ONUM, AMT, ODATE, CNUM, SNUM) VALUES (3001, 18.69, '1996-10-03', 2008, 1007), (3003, 767.19, '1996-10-03', 2001, 1001), (3002, 1900.10, '1996-10-03', 2007, 1004),(3005, 5160.45, '1996-10-03', 2003, 1002),(3006, 1098.16, '1996-10-03', 2008, 1007), (3009, 1713.23, '1996-10-04', 2002, 1003),(3007, 75.75, '1996-10-04', 2002, 1003), (3008, 4723.00, '1996-10-05', 2006, 1001),(3010, 1309.95, '1996-10-06', 2004, 1002), (3011, 9891.88, '1996-10-06', 2006, 1001);
+
+mysql> select * from orders;
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1996-10-03 | 2008 | 1007 |
+| 3002 | 1900.10 | 1996-10-03 | 2007 | 1004 |
+| 3003 |  767.19 | 1996-10-03 | 2001 | 1001 |
+| 3005 | 5160.45 | 1996-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1996-10-03 | 2008 | 1007 |
+| 3007 |   75.75 | 1996-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1996-10-05 | 2006 | 1001 |
+| 3009 | 1713.23 | 1996-10-04 | 2002 | 1003 |
+| 3010 | 1309.95 | 1996-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1996-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+Queries
+1. List all the columns of the Salespeople table.
+mysql> select * from Salespeople;
+2. List all customers with a rating of 100.
+mysql> select * from Customers where rating =100;
+3. Find all records in the Customer table with NULL values in the city column.
+mysql> select * from Customers where city is null;
+Empty set (0.00 sec)
+
+4. Find the largest order taken by each salesperson on each date.
+mysql> SELECT SNUM, ODATE, MAX(AMT) AS Largest_order_taken FROM Orders GROUP BY SNUM,ODATE;
++------+------------+---------------------+
+| SNUM | ODATE      | Largest_order_taken |
++------+------------+---------------------+
+| 1007 | 1996-10-03 |             1098.16 |
+| 1004 | 1996-10-03 |             1900.10 |
+| 1001 | 1996-10-03 |              767.19 |
+| 1002 | 1996-10-03 |             5160.45 |
+| 1003 | 1996-10-04 |             1713.23 |
+| 1001 | 1996-10-05 |             4723.00 |
+| 1002 | 1996-10-06 |             1309.95 |
+| 1001 | 1996-10-06 |             9891.88 |
++------+------------+---------------------+
+5. Arrange the Orders table by descending customer number.
+mysql> SELECT * FROM Orders ORDER BY CNUM DESC;
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1996-10-03 | 2008 | 1007 |
+| 3006 | 1098.16 | 1996-10-03 | 2008 | 1007 |
+| 3002 | 1900.10 | 1996-10-03 | 2007 | 1004 |
+| 3008 | 4723.00 | 1996-10-05 | 2006 | 1001 |
+| 3011 | 9891.88 | 1996-10-06 | 2006 | 1001 |
+| 3010 | 1309.95 | 1996-10-06 | 2004 | 1002 |
+| 3005 | 5160.45 | 1996-10-03 | 2003 | 1002 |
+| 3007 |   75.75 | 1996-10-04 | 2002 | 1003 |
+| 3009 | 1713.23 | 1996-10-04 | 2002 | 1003 |
+| 3003 |  767.19 | 1996-10-03 | 2001 | 1001 |
++------+---------+------------+------+------+
+
+6. Find which salespeople currently have orders in the Orders table.
+mysql> SELECT DISTINCT SNUM FROM Orders;
++------+
+| SNUM |
++------+
+| 1001 |
+| 1002 |
+| 1003 |
+| 1004 |
+| 1007 |
++------+
+
+7. List names of all customers matched with the salespeople serving them.
+mysql> SELECT C.CNAME ,S.SNAME FROM Customers C JOIN Salespeople S ON C.CNUM =S.SNUM;
+
+8. Find the names and numbers of all salespeople who had more than one customer.
+mysql> SELECT S.SNUM, S.SNAME FROM Salespeople S JOIN Customers C ON S.SNUM = C.SNUM GROUP BY S.SNUM, S.SNAME
+ HAVING COUNT(C.CNUM) > 1;
++------+--------+
+| SNUM | SNAME  |
++------+--------+
+| 1001 | Peel   |
+| 1002 | Serres |
+9. Count the orders of each of the salespeople and output the results in descending order.
+
+mysql> SELECT SNUM, COUNT(*) AS OrderCount FROM Orders GROUP BY SNUM ORDER BY OrderCount DESC;
++------+------------+
+| SNUM | OrderCount |
++------+------------+
+| 1001 |          3 |
+| 1002 |          2 |
+| 1003 |          2 |
+| 1007 |          2 |
+| 1004 |          1 |
++------+------------+
+10. List the Customer table if and only if one or more of the customers in the Customer table are
+located in San Jose.
+mysql> SELECT * FROM Customers WHERE EXISTS ( SELECT 1 FROM Customers WHERE CITY = 'San Jose' );
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+11. Match salespeople to customers according to what city they lived in.
+mysql> SELECT C.CNAME, S.SNAME, C.CITY FROM Customers C JOIN Salespeople S ON C.CITY = S.CITY;
++----------+--------+----------+
+| CNAME    | SNAME  | CITY     |
++----------+--------+----------+
+| Hoffman  | Fran   | London   |
+| Hoffman  | Motika | London   |
+| Hoffman  | Peel   | London   |
+| Liu      | Serres | San Jose |
+| Clemens  | Fran   | London   |
+| Clemens  | Motika | London   |
+| Clemens  | Peel   | London   |
+| Cisneros | Serres | San Jose |
++----------+--------+----------+
+
+12. Find the largest order taken by each salesperson.
+mysql> select SNUM,max(AMT)AS Largest_order_taken from Orders group by SNUM;
+
+13. Find customers in San Jose who have a rating above 200.
+mysql> select * from Customers where CITY = 'san jose' and RATING > 200;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+14. List the names and commissions of all salespeople in London.
+mysql> select SNAME,COMM from Salespeople where CITY = 'london';
++--------+------+
+| SNAME  | COMM |
++--------+------+
+| Peel   | 0.12 |
+| Motika | 0.11 |
+| Fran   | 0.26 |
++--------+------+
+15. List all the orders of salesperson Motika from the Orders table.
+mysql> SELECT * FROM Orders WHERE SNUM = (SELECT SNUM FROM Salespeople WHERE SNAME = 'Motika');
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1996-10-03 | 2007 | 1004 |
+
+16. Find all customers with orders on October 3.
+mysql> SELECT DISTINCT C.CNAME FROM CUSTOMERS C JOIN Orders O ON C.CNUM = O.CNUM
+WHERE ODATE = '1996-10-03';
++----------+
+| CNAME    |
++----------+
+| Cisneros |
+| Pereira  |
+| Hoffman  |
+| Liu      |
++----------+
+
+17. Give the sums of the amounts from the Orders table, grouped by date, eliminating all those dates where the SUM was not at least 2000.00 above the MAX amount.
+mysql> select sum(amt) from orders group by odate having sum(amt)>(select max(amt) from orders)+2000;
+
+18. Select all orders that had amounts that were greater than at least one of the orders from October 6.
+mysql> select * from orders where amt > (select min(amt)from orders where odate='1996-10-06');
+19. Write a query that uses the EXISTS operator to extract all salespeople who have customers
+with a rating of 300.
+mysql> select sname from salespeople s where exixts(select 1 from customers c where c.snum=s.sum and c.rating=300);
+
+20. Find all pairs of customers having the same rating.
+mysql> select c1.cname as pair_customers ,c1.rating from customers c1,customers c2 where c1.rating=c2.rating and c1.cnum<c2.cnum;
+
++-----------+-----------+--------+
+| Customer1 | Customer2 | RATING |
++-----------+-----------+--------+
+| Hoffman   | Clemens   |    100 |
+| Hoffman   | Pereira   |    100 |
+| Giovanni  | Liu       |    200 |
+| Grass     | Cisneros  |    300 |
+| Clemens   | Pereira   |    100 |
++-----------+-----------+--------+
+21. Find all customers whose CNUM is 1000 above the SNUM of Serres.
+22. Give the salespeople’s commissions as percentages instead of decimal numbers.
+23. Find the largest order taken by each salesperson on each date, eliminating those MAX orders
+which are less than $3000.00 in value.
+24. List the largest orders for October 3, for each salesperson.
+25. Find all customers located in cities where Serres (SNUM 1002) has customers.
+26. Select all customers with a rating above 200.00.
