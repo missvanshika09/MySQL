@@ -249,3 +249,54 @@ which are less than $3000.00 in value.
 24. List the largest orders for October 3, for each salesperson.
 25. Find all customers located in cities where Serres (SNUM 1002) has customers.
 26. Select all customers with a rating above 200.00.
+
+27. Count the number of salespeople currently listing orders in the Orders table.
+28. Write a query that produces all customers serviced by salespeople with a commission above
+12%. Output the customer’s name and the salesperson’s rate of commission.
+29. Find salespeople who have multiple customers.
+30. Find salespeople with customers located in their city.
+31. Find all salespeople whose name starts with ‘P’ and the fourth character is ‘l’.
+
+32. Write a query that uses a subquery to obtain all orders for the customer named Cisneros.
+Assume you do not know his customer number.
+33. Find the largest orders for Serres and Rifkin.
+34. Extract the Salespeople table in the following order : SNUM, SNAME, COMMISSION, CITY.
+35. Select all customers whose names fall in between ‘A’ and ‘G’ alphabetical range.
+36. Select all the possible combinations of customers that you can assign.
+37. Select all orders that are greater than the average for October 4.
+38. Write a select command using a corelated subquery that selects the names and numbers of all
+customers with ratings equal to the maximum for their city.
+39. Write a query that totals the orders for each day and places the results in descending order.
+40. Write a select command that produces the rating followed by the name of each customer in
+San Jose.
+41. Find all orders with amounts smaller than any amount for a customer in San Jose.
+42. Find all orders with above average amounts for their customers.
+43. Write a query that selects the highest rating in each city.
+44. Write a query that calculates the amount of the salesperson’s commission on each order by a
+customer with a rating above 100.00.
+45. Count the customers with ratings above San Jose’s average.
+46. Write a query that produces all pairs of salespeople with themselves as well as duplicate rows
+with the order reversed.
+47. Find all salespeople that are located in either Barcelona or London.
+48. Find all salespeople with only one customer.
+49. Write a query that joins the Customer table to itself to find all pairs of customers served by a
+single salesperson.
+50. Write a query that will give you all orders for more than $1000.00
+51. Write a query that lists each order number followed by the name of the customer who made
+that order.
+52. Write 2 queries that select all salespeople (by name and number) who have customers in their
+cities who they do not service, one using a join and one a corelated subquery. Which solution
+is more elegant?
+53. Write a query that selects all customers whose ratings are equal to or greater than ANY (in the
+SQL sense) of Serres’?
+54. Write 2 queries that will produce all orders taken on October 3 or October 4.
+55. Write a query that produces all pairs of orders by a given customer. Name that customer and
+eliminate duplicates.
+56. Find only those customers whose ratings are higher than every customer in Rome.
+57. Write a query on the Customers table whose output will exclude all customers with a rating <=
+100.00, unless they are located in Rome.
+58. Find all rows from the Customers table for which the salesperson number is 1001.
+59. Find the total amount in Orders for each salesperson for whom this total is greater than the
+amount of the largest order in the table.
+60.Write a query that selects all orders save those with zeroes or Nulls in the amount field.
+
