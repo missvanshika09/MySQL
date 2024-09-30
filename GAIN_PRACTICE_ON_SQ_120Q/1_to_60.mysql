@@ -243,7 +243,29 @@ mysql> select c1.cname as pair_customers ,c1.rating from customers c1,customers 
 | Clemens   | Pereira   |    100 |
 +-----------+-----------+--------+
 21. Find all customers whose CNUM is 1000 above the SNUM of Serres.
+mysql> select * from customers where cnum>1000+ (select snum from salespeople where sname='serres');
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
 22. Give the salespeople’s commissions as percentages instead of decimal numbers.
+mysql> select sname,comm*100 from salespeople;
++---------+----------+
+| sname   | comm*100 |
++---------+----------+
+| Peel    |    12.00 |
+| Serres  |    13.00 |
+| AxelRod |    10.00 |
+| Motika  |    11.00 |
+| Fran    |    26.00 |
+| Rifkin  |    15.00 |
++---------+----------+
+
 23. Find the largest order taken by each salesperson on each date, eliminating those MAX orders
 which are less than $3000.00 in value.
 24. List the largest orders for October 3, for each salesperson.
@@ -274,13 +296,19 @@ San Jose.
 43. Write a query that selects the highest rating in each city.
 44. Write a query that calculates the amount of the salesperson’s commission on each order by a
 customer with a rating above 100.00.
+ mysql> select sname,sum(amt*comm) total_comm from customers c, salespeople s, orders o where c.snum=s.snum and s.snum=o.snum and c.cnum=o.cnum and rating>100 group by sname;
+or
+ mysql> select sname,sum(amt*comm) total_comm from coustomers c join salespeople s on  c.snum=s.snum order o on s.snum=o.snum and c.cnum=o.cnum and rating>100 group by sname;
+
+
 45. Count the customers with ratings above San Jose’s average.
-46. Write a query that produces all pairs of salespeople with themselves as well as duplicate rows
-with the order reversed.
+46. Write a query that produces all pairs of salespeople with themselves as well as duplicate rows with the order reversed.
+select s1.sname, s2.sname from salespeople s1,salespeople s2;
 47. Find all salespeople that are located in either Barcelona or London.
 48. Find all salespeople with only one customer.
-49. Write a query that joins the Customer table to itself to find all pairs of customers served by a
-single salesperson.
+49. Write a query that joins the Customer table to itself to find all pairs of customers served by a single salesperson.
+ mysql> select  c1.cnum,c2.cnum  from customers c1,customers c2 where c1.snum=c2.snum and c1.snum=c2.snum and  c1.snum<c2.snum;
+
 50. Write a query that will give you all orders for more than $1000.00
 51. Write a query that lists each order number followed by the name of the customer who made
 that order.
@@ -290,8 +318,9 @@ is more elegant?
 53. Write a query that selects all customers whose ratings are equal to or greater than ANY (in the
 SQL sense) of Serres’?
 54. Write 2 queries that will produce all orders taken on October 3 or October 4.
-55. Write a query that produces all pairs of orders by a given customer. Name that customer and
-eliminate duplicates.
+55. Write a query that produces all pairs of orders by a given customer. Name that customer and eliminate duplicates.
+mysql> select from order o1,order o2, customers c where o1.cnum=c.num and o2.cnum=c.cnum ando1.onum<o2.onum;
+
 56. Find only those customers whose ratings are higher than every customer in Rome.
 57. Write a query on the Customers table whose output will exclude all customers with a rating <=
 100.00, unless they are located in Rome.
