@@ -133,7 +133,26 @@ mysql> Select deptname, ename ,salary from emp join dept where emp.deptid=dept.d
 | IT       | a5    |      3 |
 +----------+-------+--------+
 6. Display the name , deptname of employee whose salary is second highest.
+mysql> select ename, deptname, salary from emp join dept on dept.deptid=emp.deptid order by salary desc limit 1  offset 1 ;
++-------+----------+--------+
+| ename | deptname | salary |
++-------+----------+--------+
+| x     | HR       |  28222 |
++-------+----------+--------+
+
 7. display the name, deptname of top five earning employees.
+mysql> select ename, deptname, salary from emp join dept on dept.deptid=emp.deptid order by salary desc limit 5;
++-------+----------+--------+
+| ename | deptname | salary |
++-------+----------+--------+
+| a101  | HR       |  97566 |
+| x     | HR       |  28222 |
+| w     | Finance  |  20001 |
+| y     | Finance  |  19212 |
+| z     | HR       |  12111 |
++-------+----------+--------+
 8. Display the deptname, name of top 5 earning employees from each dept.
+
+
 9. Display the avg salary of each dept.
 10.Display the min and max salary of each dept.
