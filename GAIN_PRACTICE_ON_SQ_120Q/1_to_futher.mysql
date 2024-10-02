@@ -386,7 +386,7 @@ select * from customers where snum in (select snum from salespeople where sname 
 74. Count the number of salespeople registering orders for each day. (If a salesperson has more than one order on a given day, 
 he or she should be counted only once.) 
 
-elect odate,count(distinct sname) from orders o join salespeople s on o.snum=s.snum group by odate;
+select odate,count(distinct sname) from orders o join salespeople s on o.snum=s.snum group by odate;
 
 
 75. Find all orders attributed to salespeople in London.
