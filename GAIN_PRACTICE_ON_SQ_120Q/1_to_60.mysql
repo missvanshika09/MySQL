@@ -1,3 +1,5 @@
+
+
 mysql> use marathonsql;
 Database changed
 mysql> CREATE TABLE Salespeople ( SNUM INT PRIMARY KEY, SNAME VARCHAR(50),CITY VARCHAR(50),  COMM DECIMAL(3, 2));
