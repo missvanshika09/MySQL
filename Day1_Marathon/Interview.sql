@@ -1,4 +1,4 @@
- create table table1( ColumnA int);
+Ques) create table table1( ColumnA int);
  create table table2( ColumnB int);
 Query OK, 0 rows affected (0.30 sec)
 
